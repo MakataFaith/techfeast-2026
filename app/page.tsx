@@ -204,6 +204,41 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <section className="consultation-offer" aria-labelledby="consultation-title">
+            <div className="consultation-intro">
+              <p className="eyebrow">Personalised care for melanin-rich skin</p>
+              <h2 id="consultation-title">Instant, Specialized Skin Care<br /><span>For Dark Skin Tones</span></h2>
+              <p>Connect directly with verified dermatologists. Get tailored skin diagnostic analysis and immediate prescriptions optimized for melanin-rich skin.</p>
+            </div>
+            <div className="consultation-features">
+              <article className="consultation-feature">
+                <span className="feature-icon" aria-hidden="true">▣</span>
+                <div><h3>1-on-1 Direct Video Session</h3><p>Private video consultation with expert dermatologists specialized in dark skin care.</p></div>
+              </article>
+              <article className="consultation-feature">
+                <span className="feature-icon" aria-hidden="true">✳</span>
+                <div><h3>Tailored Skincare &amp; Analysis</h3><p>AI-assisted skin diagnostic report built specifically for melanin-rich skin profiles.</p></div>
+              </article>
+              <article className="consultation-feature">
+                <span className="feature-icon" aria-hidden="true">▧</span>
+                <div><h3>Immediate Care Plan</h3><p>Receive your electronic prescription and clinical routine plan right after your call.</p></div>
+              </article>
+            </div>
+            <article className="consultation-price-card">
+              <div className="price-card-top"><span>One-time consultation fee</span><span>No Hidden Charges</span></div>
+              <p className="consultation-price"><strong>₦49,999</strong><span>/Session</span></p>
+              <ul>
+                <li><span aria-hidden="true">✓</span><p><strong>30-minute 1-on-1 Video Consultation</strong> with a verified dermatologist</p></li>
+                <li><span aria-hidden="true">✓</span><p><strong>Full Diagnostic Report &amp; Skin Analysis</strong> tailored for dark skin</p></li>
+                <li><span aria-hidden="true">✓</span><p><strong>Personalized Skincare Protocol &amp; Prescription</strong> sent immediately</p></li>
+                <li><span aria-hidden="true">✓</span><p><strong>7-day follow-up text support</strong> with our clinical team</p></li>
+              </ul>
+              <a className="primary-button consultation-pay-button" href="https://paystack.shop/pay/2kzqv2seg5" target="_blank" rel="noopener noreferrer">
+                <span aria-hidden="true">▣</span> Book &amp; Pay ₦49,999 Now <span aria-hidden="true">→</span>
+              </a>
+              <p className="checkout-note"><span aria-hidden="true">⬟</span> Fast, Encrypted Checkout via Paystack</p>
+            </article>
+          </section>
         </section>
       )}
 
@@ -359,10 +394,9 @@ export default function Home() {
 
               <div className="result-actions">
                 <button className="secondary-button" onClick={reset}>Start Another Analysis</button>
-                <button className="primary-button consultation-button" disabled>
-                  Book a Specialist Consultation
-                  <small>Booking link pending confirmation</small>
-                </button>
+                <a className="primary-button consultation-button" href="https://paystack.shop/pay/2kzqv2seg5">
+                  Book a Consult
+                </a>
               </div>
               <p className="disclaimer">
                 These AI-generated insights are for skincare information and are not a medical diagnosis.

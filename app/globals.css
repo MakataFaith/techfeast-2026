@@ -109,6 +109,37 @@ button { cursor: pointer; }
 .secondary-button input { display: none; }
 .trust { margin-top: 16px; color: rgba(92,74,58,.55); font-size: 12px; }
 
+.consultation-offer {
+  padding: 78px 24px 84px;
+  background: var(--cream);
+  color: var(--dusk);
+}
+.consultation-intro { max-width: 880px; margin: 0 auto 38px; text-align: center; }
+.consultation-intro .eyebrow { color: var(--terracotta); }
+.consultation-intro h2 { margin: 0; font-size: clamp(38px, 5vw, 62px); line-height: .98; letter-spacing: -.04em; }
+.consultation-intro h2 span { color: var(--terracotta); }
+.consultation-intro > p:last-child { max-width: 820px; margin: 20px auto 0; color: rgba(58,46,38,.72); font-size: 18px; line-height: 1.55; }
+.consultation-features { width: min(1060px, 100%); margin: 0 auto 60px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.consultation-feature { min-height: 176px; display: flex; gap: 18px; padding: 26px; border: 1px solid rgba(193,122,90,.12); border-radius: 20px; background: #fff; box-shadow: 0 14px 35px rgba(92,74,58,.06); }
+.feature-icon { flex: 0 0 50px; width: 50px; height: 50px; display: grid; place-items: center; border: 1px solid rgba(193,122,90,.32); border-radius: 15px; background: rgba(193,122,90,.08); color: var(--terracotta); font-size: 23px; }
+.consultation-feature h3 { margin: 1px 0 6px; color: var(--dusk); font-size: 17px; line-height: 1.35; }
+.consultation-feature p { margin: 0; color: rgba(58,46,38,.68); font-size: 15px; line-height: 1.55; }
+.consultation-price-card { width: min(640px, 100%); margin: 0 auto; padding: 40px; border: 1px solid rgba(193,122,90,.45); border-radius: 32px; background: linear-gradient(145deg, #fff, var(--parchment)); box-shadow: 0 28px 80px rgba(92,74,58,.12); }
+.price-card-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; color: rgba(58,46,38,.65); font-size: 14px; }
+.price-card-top span:first-child { padding: 7px 13px; border: 1px solid rgba(193,122,90,.38); border-radius: 999px; color: var(--terra-dark); font-size: 12px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.consultation-price { margin: 16px 0 20px; display: flex; align-items: baseline; gap: 8px; }
+.consultation-price strong { color: var(--dusk); font-size: clamp(38px, 6vw, 50px); line-height: 1.15; }
+.consultation-price span { color: rgba(58,46,38,.65); font-size: 13px; }
+.consultation-price-card ul { margin: 0; padding: 0; display: grid; gap: 17px; list-style: none; }
+.consultation-price-card li { display: flex; align-items: flex-start; gap: 14px; color: rgba(58,46,38,.82); line-height: 1.5; }
+.consultation-price-card li > span { flex: 0 0 20px; width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: var(--sage); color: white; font-size: 13px; font-weight: 700; }
+.consultation-price-card li p { margin: -2px 0 0; }
+.consultation-price-card li strong { font-weight: 600; }
+.consultation-pay-button { width: 100%; min-height: 68px; margin-top: 34px; justify-content: center; gap: 12px; border-radius: 18px; background: linear-gradient(110deg, var(--terracotta), var(--terra-light)); color: white; box-shadow: 0 12px 32px rgba(193,122,90,.22); font-size: 17px; letter-spacing: 0; }
+.consultation-pay-button:hover { transform: translateY(-2px); }
+.checkout-note { margin: 18px 0 0; color: rgba(58,46,38,.62); text-align: center; font-size: 13px; }
+.checkout-note span { color: var(--terracotta); }
+
 .hero-visual { position: relative; min-height: 520px; display: grid; place-items: center; }
 .face-frame {
   position: relative;
@@ -237,6 +268,14 @@ button { cursor: pointer; }
   .hero-copy h1 { font-size: clamp(48px, 15vw, 70px); }
   .hero-text { font-size: 16px; }
   .hero-visual { min-height: 300px; }
+  .consultation-offer { padding: 58px 16px; }
+  .consultation-intro h2 { font-size: clamp(36px, 10vw, 52px); }
+  .consultation-intro > p:last-child { font-size: 16px; }
+  .consultation-features { grid-template-columns: 1fr; gap: 12px; margin-bottom: 36px; }
+  .consultation-feature { min-height: auto; padding: 20px; }
+  .consultation-price-card { padding: 28px 22px; border-radius: 24px; }
+  .price-card-top { align-items: flex-start; }
+  .consultation-pay-button { font-size: 14px; }
   .face-frame { width: 230px; }
   .orb-one { width: 180px; height: 180px; }
   .scanner-layout { width: calc(100% - 32px); grid-template-columns: 1fr; margin-top: 6px; }
