@@ -232,26 +232,29 @@ button { cursor: pointer; }
 
 .results-view { min-height: 100vh; background: var(--cream); }
 .results-grid {
-  width: min(1120px, calc(100% - 40px));
+  width: min(1080px, calc(100% - 40px));
   margin: 12px auto 60px;
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 40px;
-  align-items: start;
+  display: block;
 }
-.result-image { width: 100%; height: 430px; object-fit: cover; border-radius: 24px; border: 1px solid var(--warm); }
 .report { min-width: 0; }
-.report > h1 { font-family: "Cormorant Garamond", serif; font-size: 52px; margin: 0 0 12px; line-height: 1; }
-.confidence { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--warm); padding-bottom: 16px; color: var(--bark); }
-.confidence strong { color: var(--terracotta); font-size: 24px; }
+.result-summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 0 28px; }
+.result-summary .eyebrow { margin-bottom: 12px; }
+.skin-type-badge { width: fit-content; max-width: 100%; margin: 0; padding: 12px 25px; border-radius: 999px; background: linear-gradient(135deg, var(--terracotta), var(--terra-light)); color: white; font-family: "Jost", sans-serif; font-size: 18px; font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; }
+.confidence { min-width: 120px; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; color: rgba(92,74,58,.65); }
+.confidence strong { color: var(--terracotta); font-family: "Cormorant Garamond", serif; font-size: 38px; font-weight: 400; line-height: 1; }
 .measurements, .findings, .description, .recommendations { margin-top: 20px; border-radius: 18px; background: white; border: 1px solid var(--warm); padding: 22px; }
 .measurements h2, .findings h2, .description h2, .recommendations h2 { margin: 0 0 16px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--bark); }
 .measurement { margin-top: 12px; }
-.measurement div:first-child { display: flex; justify-content: space-between; font-size: 13px; }
+.measurement div:first-child { display: flex; justify-content: space-between; gap: 12px; color: var(--bark); font-size: 13px; }
+.measurement strong { font-weight: 500; }
 .bar { height: 7px; margin-top: 7px; border-radius: 99px; background: var(--parchment); overflow: hidden; }
 .bar span { height: 100%; display: block; border-radius: 99px; background: linear-gradient(90deg, var(--terracotta), var(--terra-light)); }
 .findings > div { display: flex; flex-wrap: wrap; gap: 8px; }
 .findings span { border-radius: 999px; border: 1px solid rgba(193,122,90,.2); background: rgba(193,122,90,.07); color: var(--terracotta); padding: 7px 11px; font-size: 12px; }
+.finding-summary { margin: 18px 0 0; color: rgba(92,74,58,.72); font-size: 14px; line-height: 1.7; }
+.finding-reason { margin-top: 18px; padding: 16px 18px; border-radius: 14px; background: var(--cream); border-left: 3px solid var(--terracotta); }
+.finding-reason h3 { margin: 0 0 7px; color: var(--terra-dark); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+.finding-reason p { margin: 0; color: rgba(58,46,38,.75); font-size: 14px; line-height: 1.7; white-space: pre-line; }
 .description p { margin: 0; white-space: pre-line; line-height: 1.75; color: rgba(58,46,38,.72); }
 .recommendations { display: grid; gap: 8px; }
 .recommendations > div:not(:first-child) { padding: 12px 14px; border-radius: 12px; background: var(--cream); line-height: 1.5; }
@@ -281,9 +284,10 @@ button { cursor: pointer; }
   .scanner-layout { width: calc(100% - 32px); grid-template-columns: 1fr; margin-top: 6px; }
   .scanner-box { min-height: 330px; aspect-ratio: 3 / 4; }
   .privacy-note { border-left: 0; border-top: 1px solid var(--warm); padding: 20px 0 0; }
-  .results-grid { width: calc(100% - 32px); grid-template-columns: 1fr; gap: 20px; }
-  .result-image { height: 300px; }
-  .report > h1 { font-size: 42px; }
+  .results-grid { width: calc(100% - 32px); }
+  .result-summary { align-items: flex-start; gap: 12px; }
+  .confidence { min-width: 78px; }
+  .confidence strong { font-size: 32px; }
   .result-actions { flex-direction: column; }
   .result-actions button { width: 100%; }
 }

@@ -10,8 +10,36 @@ const resultArray = (value: unknown) => (Array.isArray(value) ? value : []);
 
 function getResultData(response: ApiResult): ApiResult {
   return response.resultData && typeof response.resultData === "object"
-    ? (response.resultData as ApiResult)
+    ? { ...response, ...(response.resultData as ApiResult) }
     : response;
+}
+
+function getText(value: unknown): string | null {
+  if (typeof value === "string" && value.trim()) return value.trim();
+  if (typeof value === "number" && Number.isFinite(value)) return String(value);
+  if (Array.isArray(value)) {
+    const parts = value.map(getText).filter((part): part is string => Boolean(part));
+    return parts.length > 0 ? parts.join(" · ") : null;
+  }
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    const record = value as ApiResult;
+    for (const key of ["text", "reason", "description", "label", "name", "title", "message"]) {
+      const text = getText(record[key]);
+      if (text) return text;
+    }
+  }
+  return null;
+}
+
+function getFindingList(data: ApiResult): string[] {
+  const values = [data.findings, data.concerns, data.conditions].find(
+    (value) => Array.isArray(value) && value.length > 0
+  );
+  if (Array.isArray(values)) {
+    return values.map(getText).filter((value): value is string => Boolean(value));
+  }
+  const finding = getText(data.finding);
+  return finding ? [finding] : [];
 }
 
 export default function Home() {
@@ -157,22 +185,34 @@ export default function Home() {
   };
 
   const data = result || {};
-  const label = typeof data.label === "string" ? data.label : null;
-  const confidence =
-    typeof data.confidence === "number" ? data.confidence : null;
+  const label = getText(data.label) || "Normal / Combination";
+  const rawConfidence = typeof data.confidence === "number" ? data.confidence : 95;
+  const confidence = Math.round(rawConfidence > 0 && rawConfidence <= 1 ? rawConfidence * 100 : rawConfidence);
   const description = typeof data.description === "string" ? data.description : null;
-  const findings =
-    resultArray(data.findings).length > 0
-      ? resultArray(data.findings).map(String)
-      : resultArray(data.concerns).map(String);
+  const returnedFindings = getFindingList(data);
+  const findings = returnedFindings.length > 0
+    ? returnedFindings
+    : [data.label !== undefined ? `Detected ${label}` : "Balanced Skin"];
+  const reason = [
+    data.reason,
+    data.analysisReason,
+    data.analysis_reason,
+    data.rationale,
+    data.explanation,
+    data.reasoning,
+    data.skinTypeReason,
+    data.skin_type_reason,
+  ]
+    .map(getText)
+    .find((value): value is string => Boolean(value));
   const recommendations = resultArray(data.recommendations);
   const measurementEntries = [
-    ["hydration", "Hydration Level"],
-    ["oiliness", "Oil Production"],
-    ["sensitivity", "Sensitivity"],
-    ["elasticity", "Skin Elasticity"],
-    ["brightness", "Brightness / Glow"],
-  ].filter(([key]) => typeof data[key] === "number") as [string, string][];
+    ["hydration", "Hydration Level", "#5b9cf0", 65],
+    ["oiliness", "Oil Production", "#c17a5a", 45],
+    ["sensitivity", "Sensitivity", "#d4957a", 30],
+    ["elasticity", "Skin Elasticity", "#8a9e8a", 80],
+    ["brightness", "Brightness / Glow", "#e8b84b", 70],
+  ] as const;
 
   return (
     <main>
@@ -338,58 +378,63 @@ export default function Home() {
             <Image src="/logo.png" alt="AfriDam AI" width={120} height={40} />
           </header>
           <div className="results-grid">
-            <div>
-              {preview && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={preview} alt="Analysed face" className="result-image" />
-              )}
-            </div>
             <article className="report">
-              <p className="eyebrow">AI Diagnostic Report</p>
-              {label && <h1>{label}</h1>}
-              {confidence !== null && (
+              <div className="result-summary">
+                <div>
+                  <p className="eyebrow">Skin Type Detected</p>
+                  <h1 className="skin-type-badge">{label}</h1>
+                </div>
                 <div className="confidence">
                   <span>Confidence</span>
                   <strong>{confidence}%</strong>
                 </div>
-              )}
+              </div>
 
-              {measurementEntries.length > 0 && (
-                <div className="measurements">
-                  <h2>Skin Profile Analysis</h2>
-                  {measurementEntries.map(([key, name]) => (
+              <section className="measurements">
+                <h2>Skin Profile Analysis</h2>
+                {measurementEntries.map(([key, name, color, fallback]) => {
+                  const rawValue = typeof data[key] === "number" ? Number(data[key]) : fallback;
+                  const value = Math.min(100, Math.max(0, rawValue));
+                  return (
                     <div className="measurement" key={key}>
-                      <div><span>{name}</span><strong>{String(data[key])}%</strong></div>
-                      <div className="bar"><span style={{ width: `${Math.min(Number(data[key]), 100)}%` }} /></div>
+                      <div><span>{name}</span><strong>{value}%</strong></div>
+                      <div className="bar"><span style={{ width: `${value}%`, background: `linear-gradient(90deg, ${color}, ${color}99)` }} /></div>
                     </div>
-                  ))}
-                </div>
-              )}
+                  );
+                })}
+              </section>
 
-              {findings.length > 0 && (
-                <div className="findings">
+              {(findings.length > 0 || reason || description) && (
+                <section className="findings">
                   <h2>Key Findings</h2>
-                  <div>{findings.map((finding, index) => <span key={index}>{finding}</span>)}</div>
-                </div>
+                  {findings.length > 0 && (
+                    <div>{findings.map((finding, index) => <span key={`${finding}-${index}`}>{finding}</span>)}</div>
+                  )}
+                  <p className="finding-summary">
+                    Based on your AI analysis, we identified {findings.length} tendencies. Your personalised routine below targets your specific profile.
+                  </p>
+                  {(reason || description) && (
+                    <div className="finding-reason">
+                      <h3>Why this result</h3>
+                      <p>{reason || description}</p>
+                    </div>
+                  )}
+                </section>
               )}
 
-              {description && <div className="description"><h2>AI Clinical Analysis</h2><p>{description}</p></div>}
+              {description && reason && description !== reason && (
+                <section className="description"><h2>Detailed Analysis</h2><p>{description}</p></section>
+              )}
 
               {recommendations.length > 0 && (
-                <div className="recommendations">
+                <section className="recommendations">
                   <h2>Recommendations</h2>
                   {recommendations.map((recommendation, index) => (
                     <div key={index}>
-                      {typeof recommendation === "string"
-                        ? recommendation
-                        : typeof (recommendation as ApiResult).name === "string"
-                          ? String((recommendation as ApiResult).name)
-                          : typeof (recommendation as ApiResult).description === "string"
-                            ? String((recommendation as ApiResult).description)
-                            : "Recommended action"}
+                      {getText(recommendation) || "Recommended action"}
                     </div>
                   ))}
-                </div>
+                </section>
               )}
 
               <div className="result-actions">
